@@ -48,99 +48,182 @@ const STORE_DATA = {
     /* ================= MOBILE LEGENDS ================= */
 
     {
-      id: "ml-11",
-      name: "Mobile Legends 11 Diamonds",
+      id: "ml-14",
+      name: "14 Diamonds",
       category: "mlbb",
       price: 1.00,
       icon: "💎",
       tag: "Popular"
     },
     {
-      id: "ml-50",
-      name: "Mobile Legends 50 Diamonds",
+      id: "ml-42",
+      name: "42 Diamonds",
       category: "mlbb",
       price: 4.00,
       icon: "💎",
       tag: ""
     },
     {
-      id: "ml-86",
-      name: "Mobile Legends 86 Diamonds",
+      id: "ml-70",
+      name: "70 Diamonds",
       category: "mlbb",
       price: 6.00,
+      icon: "💎",
+      tag: ""
+    },
+    {
+      id: "ml-140",
+      name: "140 Diamonds",
+      category: "mlbb",
+      price: 13.00,
+      icon: "💎",
+      tag: "Popular"
+    },
+    {
+      id: "ml-284",
+      name: "284 Diamonds",
+      category: "mlbb",
+      price: 24.00,
       icon: "💎",
       tag: "Best Seller"
     },
     {
-      id: "ml-172",
-      name: "Mobile Legends 172 Diamonds",
+      id: "ml-355",
+      name: "355 Diamonds",
       category: "mlbb",
-      price: 12.00,
-      icon: "💎",
-      tag: ""
-    },
-    {
-      id: "ml-257",
-      name: "Mobile Legends 257 Diamonds",
-      category: "mlbb",
-      price: 17.00,
-      icon: "💎",
-      tag: ""
-    },
-    {
-      id: "ml-344",
-      name: "Mobile Legends 344 Diamonds",
-      category: "mlbb",
-      price: 23.00,
+      price: 31.00,
       icon: "💎",
       tag: ""
     },
     {
       id: "ml-429",
-      name: "Mobile Legends 429 Diamonds",
+      name: "429 Diamonds",
       category: "mlbb",
-      price: 28.00,
+      price: 37.00,
       icon: "💎",
       tag: ""
     },
     {
-      id: "ml-514",
-      name: "Mobile Legends 514 Diamonds",
+      id: "ml-716",
+      name: "716 Diamonds",
       category: "mlbb",
-      price: 34.00,
+      price: 63.00,
       icon: "💎",
       tag: ""
     },
+
+    /* ================= ROBLOX ================= */
+
     {
-      id: "ml-706",
-      name: "Mobile Legends 706 Diamonds",
-      category: "mlbb",
-      price: 45.00,
-      icon: "💎",
+      id: "rbx-100",
+      name: "100 Robux",
+      category: "roblox",
+      price: 4.00,
+      icon: "🟥",
+      tag: "Popular"
+    },
+    {
+      id: "rbx-500",
+      name: "500 Robux",
+      category: "roblox",
+      price: 19.00,
+      icon: "🟥",
       tag: ""
     },
     {
-      id: "ml-878",
-      name: "Mobile Legends 878 Diamonds",
-      category: "mlbb",
+      id: "rbx-1000",
+      name: "1,000 Robux",
+      category: "roblox",
+      price: 37.00,
+      icon: "🟥",
+      tag: ""
+    },
+    {
+      id: "rbx-1500",
+      name: "1,500 Robux",
+      category: "roblox",
       price: 56.00,
-      icon: "💎",
+      icon: "🟥",
       tag: ""
     },
     {
-      id: "ml-1050",
-      name: "Mobile Legends 1050 Diamonds",
-      category: "mlbb",
-      price: 67.00,
-      icon: "💎",
+      id: "rbx-2000",
+      name: "2,000 Robux",
+      category: "roblox",
+      price: 71.00,
+      icon: "🟥",
+      tag: "Popular"
+    },
+    {
+      id: "rbx-3000",
+      name: "3,000 Robux",
+      category: "roblox",
+      price: 110.00,
+      icon: "🟥",
       tag: ""
+    },
+    {
+      id: "rbx-4000",
+      name: "4,000 Robux",
+      category: "roblox",
+      price: 147.00,
+      icon: "🟥",
+      tag: ""
+    },
+    {
+      id: "rbx-5000",
+      name: "5,000 Robux",
+      category: "roblox",
+      price: 183.00,
+      icon: "🟥",
+      tag: ""
+    },
+    {
+      id: "rbx-6000",
+      name: "6,000 Robux",
+      category: "roblox",
+      price: 220.00,
+      icon: "🟥",
+      tag: ""
+    },
+    {
+      id: "rbx-7000",
+      name: "7,000 Robux",
+      category: "roblox",
+      price: 257.00,
+      icon: "🟥",
+      tag: ""
+    },
+    {
+      id: "rbx-8000",
+      name: "8,000 Robux",
+      category: "roblox",
+      price: 294.00,
+      icon: "🟥",
+      tag: ""
+    },
+    {
+      id: "rbx-9000",
+      name: "9,000 Robux",
+      category: "roblox",
+      price: 330.00,
+      icon: "🟥",
+      tag: ""
+    },
+    {
+      id: "rbx-10000",
+      name: "10,000 Robux",
+      category: "roblox",
+      price: 367.00,
+      icon: "🟥",
+      tag: "Best Seller"
     },
 
     /* ================= FREE FIRE ================= */
 
     {
       id: "ff-70",
-      name: "Free Fire 70 Diamonds",
+      name: "70 Diamonds",
       category: "freefire",
       price: 4.00,
       icon: "🔥",
@@ -148,7 +231,7 @@ const STORE_DATA = {
     },
     {
       id: "ff-140",
-      name: "Free Fire 140 Diamonds",
+      name: "140 Diamonds",
       category: "freefire",
       price: 8.00,
       icon: "🔥",
@@ -156,7 +239,7 @@ const STORE_DATA = {
     },
     {
       id: "ff-355",
-      name: "Free Fire 355 Diamonds",
+      name: "355 Diamonds",
       category: "freefire",
       price: 19.00,
       icon: "🔥",
@@ -164,7 +247,7 @@ const STORE_DATA = {
     },
     {
       id: "ff-720",
-      name: "Free Fire 720 Diamonds",
+      name: "720 Diamonds",
       category: "freefire",
       price: 37.00,
       icon: "🔥",
@@ -172,53 +255,10 @@ const STORE_DATA = {
     },
     {
       id: "ff-1450",
-      name: "Free Fire 1450 Diamonds",
+      name: "1450 Diamonds",
       category: "freefire",
       price: 72.00,
       icon: "🔥",
-      tag: ""
-    },
-
-    /* ================= ROBLOX ================= */
-
-    {
-      id: "rbx-80",
-      name: "Roblox 80 Robux",
-      category: "roblox",
-      price: 5.00,
-      icon: "🟥",
-      tag: "Popular"
-    },
-    {
-      id: "rbx-400",
-      name: "Roblox 400 Robux",
-      category: "roblox",
-      price: 20.00,
-      icon: "🟥",
-      tag: ""
-    },
-    {
-      id: "rbx-800",
-      name: "Roblox 800 Robux",
-      category: "roblox",
-      price: 39.00,
-      icon: "🟥",
-      tag: "Best Seller"
-    },
-    {
-      id: "rbx-1700",
-      name: "Roblox 1700 Robux",
-      category: "roblox",
-      price: 79.00,
-      icon: "🟥",
-      tag: ""
-    },
-    {
-      id: "rbx-4500",
-      name: "Roblox 4500 Robux",
-      category: "roblox",
-      price: 199.00,
-      icon: "🟥",
       tag: ""
     },
 
@@ -226,7 +266,7 @@ const STORE_DATA = {
 
     {
       id: "tt-70",
-      name: "TikTok 70 Coins",
+      name: "70 Coins",
       category: "tiktok",
       price: 5.00,
       icon: "🎵",
@@ -234,7 +274,7 @@ const STORE_DATA = {
     },
     {
       id: "tt-350",
-      name: "TikTok 350 Coins",
+      name: "350 Coins",
       category: "tiktok",
       price: 22.00,
       icon: "🎵",
@@ -242,7 +282,7 @@ const STORE_DATA = {
     },
     {
       id: "tt-700",
-      name: "TikTok 700 Coins",
+      name: "700 Coins",
       category: "tiktok",
       price: 43.00,
       icon: "🎵",
@@ -250,7 +290,7 @@ const STORE_DATA = {
     },
     {
       id: "tt-1400",
-      name: "TikTok 1400 Coins",
+      name: "1400 Coins",
       category: "tiktok",
       price: 85.00,
       icon: "🎵",
@@ -311,7 +351,6 @@ const STORE_DATA = {
       tag: "Bulk"
     }
   ]
-
 };
 
 
@@ -486,7 +525,7 @@ window.getCartCount = function () {
 
 window.formatRM = function (amount) {
 
-  return "RM " + Number(amount).toLocaleString("en-MY", {
+  return "RM" + Number(amount).toLocaleString("en-MY", {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2
   });
@@ -506,7 +545,7 @@ window.createWhatsAppOrder = function (customerName, customerPhone) {
     return "";
   }
 
-  let message = `*IZZЕRZ STORE MY — NEW ORDER*%0A%0A`;
+  let message = `*IZZERZ STORE MY — NEW ORDER*%0A%0A`;
 
   message += `👤 *Name:* ${customerName}%0A`;
   message += `📱 *Phone:* ${customerPhone}%0A%0A`;
