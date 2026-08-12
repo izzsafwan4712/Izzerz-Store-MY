@@ -1,0 +1,2892 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+
+  <title>Admin Dashboard — Izzerz Store MY</title>
+
+  <meta name="theme-color" content="#050505">
+  <meta name="description" content="Izzerz Store MY Admin Dashboard">
+
+  <link rel="icon" type="image/jpeg" href="icon.jpg">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=Sora:wght@500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg: #050505;
+      --bg2: #090909;
+      --card: rgba(255,255,255,.055);
+      --card2: rgba(255,255,255,.08);
+      --border: rgba(255,255,255,.10);
+      --text: #fff;
+      --muted: #9d9d9d;
+      --accent: #ff775f;
+      --accent2: #ffb199;
+      --danger: #ff4d67;
+      --success: #38d996;
+      --shadow: 0 20px 70px rgba(0,0,0,.45);
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-height: 100vh;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 15% 10%, rgba(255,119,95,.12), transparent 30%),
+        radial-gradient(circle at 85% 20%, rgba(255,177,153,.08), transparent 28%),
+        linear-gradient(135deg,#030303,#090909 50%,#040404);
+      font-family: Inter, sans-serif;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);
+      background-size: 45px 45px;
+      mask-image: linear-gradient(to bottom,black,transparent);
+      z-index: -1;
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    button {
+      cursor: pointer;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* =========================
+       LOGIN
+    ========================= */
+
+    #loginScreen {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 22px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .login-orb {
+      position: absolute;
+      width: 380px;
+      height: 380px;
+      border-radius: 50%;
+      background: radial-gradient(circle,rgba(255,119,95,.20),transparent 65%);
+      filter: blur(10px);
+      animation: floatOrb 7s ease-in-out infinite;
+    }
+
+    @keyframes floatOrb {
+      0%,100% {
+        transform: translate(0,0) scale(1);
+      }
+
+      50% {
+        transform: translate(30px,-25px) scale(1.08);
+      }
+    }
+
+    .login-card {
+      width: min(430px,100%);
+      padding: 35px 28px;
+      border: 1px solid var(--border);
+      background: rgba(12,12,12,.78);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      border-radius: 28px;
+      box-shadow: var(--shadow);
+      position: relative;
+      z-index: 2;
+      animation: loginIn .7s ease both;
+    }
+
+    @keyframes loginIn {
+      from {
+        opacity: 0;
+        transform: translateY(25px) scale(.97);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .admin-logo {
+      width: 78px;
+      height: 78px;
+      margin: 0 auto 20px;
+      border-radius: 22px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.16);
+      box-shadow: 0 0 40px rgba(255,119,95,.15);
+    }
+
+    .admin-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .login-card h1 {
+      text-align: center;
+      font-family: Sora,sans-serif;
+      font-size: 28px;
+      margin-bottom: 7px;
+    }
+
+    .login-card > p {
+      text-align: center;
+      color: var(--muted);
+      font-size: 14px;
+      margin-bottom: 28px;
+    }
+
+    .login-label {
+      display: block;
+      color: #dcdcdc;
+      font-size: 13px;
+      margin-bottom: 8px;
+    }
+
+    .input-wrap {
+      position: relative;
+      margin-bottom: 17px;
+    }
+
+    .input-wrap input {
+      width: 100%;
+      padding: 15px 45px 15px 16px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: rgba(255,255,255,.045);
+      color: #fff;
+      outline: none;
+      transition: .25s;
+    }
+
+    .input-wrap input:focus {
+      border-color: rgba(255,119,95,.65);
+      box-shadow: 0 0 0 4px rgba(255,119,95,.08);
+    }
+
+    .show-pass {
+      position: absolute;
+      right: 13px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: transparent;
+      border: 0;
+      color: #aaa;
+      font-size: 18px;
+    }
+
+    .login-btn {
+      width: 100%;
+      padding: 15px;
+      border: 0;
+      border-radius: 14px;
+      color: #050505;
+      background: linear-gradient(135deg,#fff,#ffb199);
+      font-weight: 800;
+      transition: .25s;
+    }
+
+    .login-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 35px rgba(255,119,95,.22);
+    }
+
+    .login-error {
+      color: #ff7185;
+      font-size: 13px;
+      text-align: center;
+      margin-top: 13px;
+      min-height: 18px;
+    }
+
+    .back-store {
+      display: block;
+      text-align: center;
+      margin-top: 22px;
+      color: #aaa;
+      font-size: 13px;
+    }
+
+    .back-store:hover {
+      color: #fff;
+    }
+
+    /* =========================
+       DASHBOARD
+    ========================= */
+
+    #dashboard {
+      display: none;
+      min-height: 100vh;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      height: 72px;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid var(--border);
+      background: rgba(5,5,5,.76);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+    }
+
+    .brand-logo {
+      width: 38px;
+      height: 38px;
+      border-radius: 11px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    .brand-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .brand-text {
+      font-family: Sora,sans-serif;
+      font-weight: 700;
+      letter-spacing: -.5px;
+    }
+
+    .brand-text span {
+      color: #999;
+      font-weight: 500;
+    }
+
+    .top-actions {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+    }
+
+    .top-btn {
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: #ddd;
+      border-radius: 11px;
+      padding: 9px 13px;
+      transition: .2s;
+    }
+
+    .top-btn:hover {
+      background: var(--card2);
+      color: #fff;
+    }
+
+    .logout {
+      color: #ff8394;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 245px 1fr;
+      min-height: calc(100vh - 72px);
+    }
+
+    /* SIDEBAR */
+
+    .sidebar {
+      border-right: 1px solid var(--border);
+      padding: 22px 15px;
+      background: rgba(0,0,0,.16);
+    }
+
+    .side-title {
+      color: #666;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      padding: 0 12px 10px;
+    }
+
+    .side-link {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      padding: 12px;
+      margin-bottom: 5px;
+      border: 1px solid transparent;
+      border-radius: 12px;
+      background: transparent;
+      color: #a8a8a8;
+      text-align: left;
+      transition: .2s;
+    }
+
+    .side-link:hover,
+    .side-link.active {
+      color: #fff;
+      background: rgba(255,255,255,.06);
+      border-color: var(--border);
+    }
+
+    .side-link.active {
+      box-shadow: inset 3px 0 0 var(--accent);
+    }
+
+    /* MAIN */
+
+    .main {
+      padding: 30px;
+      max-width: 1500px;
+      width: 100%;
+      margin: auto;
+    }
+
+    .page-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 20px;
+      margin-bottom: 25px;
+    }
+
+    .eyebrow {
+      color: var(--accent2);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-size: 11px;
+      font-weight: 700;
+      margin-bottom: 7px;
+    }
+
+    .page-head h1 {
+      font-family: Sora,sans-serif;
+      font-size: clamp(28px,4vw,42px);
+      letter-spacing: -1.5px;
+    }
+
+    .page-head p {
+      color: var(--muted);
+      margin-top: 7px;
+      font-size: 14px;
+    }
+
+    .date-box {
+      border: 1px solid var(--border);
+      background: var(--card);
+      padding: 10px 14px;
+      border-radius: 12px;
+      color: #bbb;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+
+    /* STATS */
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4,1fr);
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+
+    .stat {
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: linear-gradient(145deg,rgba(255,255,255,.065),rgba(255,255,255,.025));
+      border-radius: 18px;
+      padding: 20px;
+      transition: .3s;
+    }
+
+    .stat:hover {
+      transform: translateY(-4px);
+      border-color: rgba(255,119,95,.25);
+    }
+
+    .stat-icon {
+      font-size: 22px;
+      margin-bottom: 15px;
+    }
+
+    .stat small {
+      color: #888;
+      display: block;
+      font-size: 12px;
+      margin-bottom: 7px;
+    }
+
+    .stat strong {
+      display: block;
+      font-family: Sora,sans-serif;
+      font-size: 25px;
+    }
+
+    /* PANELS */
+
+    .panel {
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.035);
+      border-radius: 20px;
+      overflow: hidden;
+      margin-bottom: 22px;
+    }
+
+    .panel-head {
+      padding: 18px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+    }
+
+    .panel-head h2 {
+      font-family: Sora,sans-serif;
+      font-size: 17px;
+    }
+
+    .panel-body {
+      padding: 20px;
+    }
+
+    /* PRODUCT CONTROLS */
+
+    .controls {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .search-box {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .search-box input,
+    .control-select,
+    .form-input {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 11px;
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.045);
+      color: #fff;
+      outline: none;
+    }
+
+    select option {
+      background: #111;
+      color: #fff;
+    }
+
+    .search-box input:focus,
+    .control-select:focus,
+    .form-input:focus {
+      border-color: rgba(255,119,95,.55);
+    }
+
+    .primary-btn,
+    .danger-btn,
+    .secondary-btn {
+      border-radius: 11px;
+      border: 1px solid var(--border);
+      padding: 11px 15px;
+      font-weight: 700;
+      transition: .2s;
+    }
+
+    .primary-btn {
+      color: #080808;
+      background: linear-gradient(135deg,#fff,#ffae96);
+      border: 0;
+    }
+
+    .primary-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 25px rgba(255,119,95,.16);
+    }
+
+    .secondary-btn {
+      color: #ddd;
+      background: var(--card);
+    }
+
+    .danger-btn {
+      color: #ff8595;
+      background: rgba(255,77,103,.07);
+      border-color: rgba(255,77,103,.2);
+    }
+
+    /* TABLE */
+
+    .table-wrap {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      min-width: 700px;
+      border-collapse: collapse;
+    }
+
+    th {
+      text-align: left;
+      color: #777;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 13px 15px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    td {
+      padding: 15px;
+      border-bottom: 1px solid rgba(255,255,255,.055);
+      color: #ddd;
+      font-size: 13px;
+    }
+
+    tbody tr {
+      transition: .2s;
+    }
+
+    tbody tr:hover {
+      background: rgba(255,255,255,.025);
+    }
+
+    .product-name {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      font-weight: 600;
+    }
+
+    .product-icon {
+      width: 37px;
+      height: 37px;
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      background: rgba(255,255,255,.06);
+      font-size: 18px;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 5px 8px;
+      border-radius: 7px;
+      background: rgba(255,119,95,.09);
+      color: var(--accent2);
+      font-size: 10px;
+    }
+
+    .price {
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .actions {
+      display: flex;
+      gap: 7px;
+    }
+
+    .small-btn {
+      border: 1px solid var(--border);
+      background: rgba(255,255,255,.04);
+      color: #bbb;
+      border-radius: 8px;
+      padding: 7px 9px;
+      font-size: 12px;
+    }
+
+    .small-btn:hover {
+      color: #fff;
+      background: rgba(255,255,255,.08);
+    }
+
+    /* FORM */
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(2,1fr);
+      gap: 15px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    .form-group.full {
+      grid-column: 1/-1;
+    }
+
+    .form-group label {
+      color: #aaa;
+      font-size: 12px;
+    }
+
+    .form-actions {
+      grid-column: 1/-1;
+      display: flex;
+      gap: 9px;
+      justify-content: flex-end;
+    }
+
+    /* EMPTY */
+
+    .empty {
+      text-align: center;
+      color: #666;
+      padding: 40px 20px;
+    }
+
+    /* TOAST */
+
+    #toast {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      z-index: 1000;
+      max-width: 330px;
+      padding: 13px 16px;
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      background: rgba(20,20,20,.92);
+      backdrop-filter: blur(18px);
+      box-shadow: var(--shadow);
+      color: #fff;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(15px);
+      transition: .3s;
+    }
+
+    #toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* MOBILE */
+
+    @media(max-width:900px) {
+
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        display: none;
+      }
+
+      .stats {
+        grid-template-columns: repeat(2,1fr);
+      }
+
+      .main {
+        padding: 20px 15px;
+      }
+
+      .topbar {
+        padding: 0 14px;
+      }
+
+      .brand-text {
+        font-size: 13px;
+      }
+
+      .top-btn.store-btn {
+        display: none;
+      }
+    }
+
+    @media(max-width:600px) {
+
+      .stats {
+        grid-template-columns: 1fr 1fr;
+        gap: 9px;
+      }
+
+      .stat {
+        padding: 15px;
+      }
+
+      .stat strong {
+        font-size: 20px;
+      }
+
+      .page-head {
+        display: block;
+      }
+
+      .date-box {
+        display: inline-block;
+        margin-top: 15px;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .form-group.full {
+        grid-column: auto;
+      }
+
+      .form-actions {
+        grid-column: auto;
+      }
+
+      .login-card {
+        padding: 30px 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- =====================================================
+     LOGIN SCREEN
+===================================================== -->
+
+<section id="loginScreen">
+
+  <div class="login-orb"></div>
+
+  <div class="login-card">
+
+    <div class="admin-logo">
+      <img
+        src="admin.jpg"
+        alt="Admin"
+        onerror="this.src='icon.jpg'"
+      >
+    </div>
+
+    <h1>Admin Dashboard</h1>
+
+    <p>
+      Izzerz Store MY Management
+    </p>
+
+    <form id="loginForm">
+
+      <label class="login-label" for="adminPassword">
+        Admin Password
+      </label>
+
+      <div class="input-wrap">
+
+        <input
+          id="adminPassword"
+          type="password"
+          placeholder="Enter admin password"
+          autocomplete="current-password"
+          required
+        >
+
+        <button
+          type="button"
+          class="show-pass"
+          id="showPassword"
+          aria-label="Show password"
+        >👁</button>
+
+      </div>
+
+      <button
+        type="submit"
+        class="login-btn"
+      >
+        Enter Dashboard
+      </button>
+
+      <div
+        class="login-error"
+        id="loginError"
+      ></div>
+
+    </form>
+
+    <a
+      href="index.html"
+      class="back-store"
+    >
+      ← Back to Izzerz Store
+    </a>
+
+  </div>
+
+</section>
+
+
+<!-- =====================================================
+     DASHBOARD
+===================================================== -->
+
+<div id="dashboard">
+
+  <!-- TOP BAR -->
+
+  <header class="topbar">
+
+    <a href="index.html" class="brand">
+
+      <span class="brand-logo">
+        <img
+          src="icon.jpg"
+          alt="Izzerz Store MY"
+        >
+      </span>
+
+      <span class="brand-text">
+        IZZERZ <span>ADMIN</span>
+      </span>
+
+    </a>
+
+    <div class="top-actions">
+
+      <a
+        href="index.html"
+        class="top-btn store-btn"
+      >
+        🛍 View Store
+      </a>
+
+      <button
+        class="top-btn logout"
+        id="logoutBtn"
+      >
+        Logout
+      </button>
+
+    </div>
+
+  </header>
+
+
+  <div class="layout">
+
+    <!-- SIDEBAR -->
+
+    <aside class="sidebar">
+
+      <div class="side-title">
+        Dashboard
+      </div>
+
+      <button
+        class="side-link active"
+        data-section="overview"
+      >
+        📊 Overview
+      </button>
+
+      <button
+        class="side-link"
+        data-section="products"
+      >
+        📦 Products
+      </button>
+
+      <button
+        class="side-link"
+        data-section="orders"
+      >
+        🛒 Orders
+      </button>
+
+      <button
+        class="side-link"
+        data-section="settings"
+      >
+        ⚙️ Settings
+      </button>
+
+      <div
+        class="side-title"
+        style="margin-top:25px"
+      >
+        Store
+      </div>
+
+      <a
+        href="index.html#products"
+        class="side-link"
+      >
+        🛍 Store Products
+      </a>
+
+      <a
+        href="index.html#contact"
+        class="side-link"
+      >
+        💬 Contact
+      </a>
+
+    </aside>
+
+
+    <!-- MAIN -->
+
+    <main class="main">
+
+      <!-- OVERVIEW -->
+
+      <section id="overviewSection">
+
+        <div class="page-head">
+
+          <div>
+
+            <div class="eyebrow">
+              Control Center
+            </div>
+
+            <h1>
+              Admin Dashboard
+            </h1>
+
+            <p>
+              Manage your Izzerz Store MY from one place.
+            </p>
+
+          </div>
+
+          <div
+            class="date-box"
+            id="currentDate"
+          >
+            Loading date...
+          </div>
+
+        </div>
+
+
+        <!-- STATS -->
+
+        <div class="stats">
+
+          <div class="stat">
+
+            <div class="stat-icon">
+              📦
+            </div>
+
+            <small>
+              Total Products
+            </small>
+
+            <strong id="statProducts">
+              0
+            </strong>
+
+          </div>
+
+
+          <div class="stat">
+
+            <div class="stat-icon">
+              🛒
+            </div>
+
+            <small>
+              Cart Items
+            </small>
+
+            <strong id="statCart">
+              0
+            </strong>
+
+          </div>
+
+
+          <div class="stat">
+
+            <div class="stat-icon">
+              💰
+            </div>
+
+            <small>
+              Cart Value
+            </small>
+
+            <strong id="statValue">
+              RM 0.00
+            </strong>
+
+          </div>
+
+
+          <div class="stat">
+
+            <div class="stat-icon">
+              ⚡
+            </div>
+
+            <small>
+              Store Status
+            </small>
+
+            <strong style="color:#38d996">
+              ONLINE
+            </strong>
+
+          </div>
+
+        </div>
+
+
+        <!-- QUICK ACTIONS -->
+
+        <div class="panel">
+
+          <div class="panel-head">
+
+            <h2>
+              Quick Actions
+            </h2>
+
+          </div>
+
+          <div class="panel-body">
+
+            <div class="controls">
+
+              <button
+                class="primary-btn"
+                id="quickAddProduct"
+              >
+                ＋ Add Product
+              </button>
+
+              <button
+                class="secondary-btn"
+                id="refreshDashboard"
+              >
+                ↻ Refresh
+              </button>
+
+              <a
+                href="index.html"
+                class="secondary-btn"
+              >
+                🛍 Open Store
+              </a>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- RECENT PRODUCTS -->
+
+        <div class="panel">
+
+          <div class="panel-head">
+
+            <h2>
+              Store Products
+            </h2>
+
+            <button
+              class="secondary-btn"
+              data-go="products"
+            >
+              Manage Products →
+            </button>
+
+          </div>
+
+          <div class="panel-body">
+
+            <div id="recentProducts">
+              <div class="empty">
+                Loading products...
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- PRODUCTS -->
+
+      <section
+        id="productsSection"
+        style="display:none"
+      >
+
+        <div class="page-head">
+
+          <div>
+
+            <div class="eyebrow">
+              Store Management
+            </div>
+
+            <h1>
+              Products
+            </h1>
+
+            <p>
+              Add, edit and remove products.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="panel">
+
+          <div class="panel-head">
+
+            <h2>
+              Product Manager
+            </h2>
+
+            <button
+              class="primary-btn"
+              id="addProductBtn"
+            >
+              ＋ Add Product
+            </button>
+
+          </div>
+
+          <div class="panel-body">
+
+            <div class="controls">
+
+              <div class="search-box">
+                <input
+                  id="productSearch"
+                  type="search"
+                  placeholder="Search products..."
+                >
+              </div>
+
+              <select
+                id="categoryFilter"
+                class="control-select"
+                style="max-width:190px"
+              >
+                <option value="all">
+                  All Categories
+                </option>
+              </select>
+
+            </div>
+
+          </div>
+
+          <div class="table-wrap">
+
+            <table>
+
+              <thead>
+
+                <tr>
+                  <th>Product</th>
+                  <th>Category</th>
+                  <th>Price</th>
+                  <th>Tag</th>
+                  <th>Actions</th>
+                </tr>
+
+              </thead>
+
+              <tbody id="productTableBody"></tbody>
+
+            </table>
+
+          </div>
+
+        </div>
+
+
+        <!-- ADD / EDIT PRODUCT -->
+
+        <div
+          class="panel"
+          id="productFormPanel"
+          style="display:none"
+        >
+
+          <div class="panel-head">
+
+            <h2 id="productFormTitle">
+              Add Product
+            </h2>
+
+          </div>
+
+          <div class="panel-body">
+
+            <form id="productForm">
+
+              <div class="form-grid">
+
+                <div class="form-group">
+
+                  <label>
+                    Product ID
+                  </label>
+
+                  <input
+                    class="form-input"
+                    id="productId"
+                    required
+                    placeholder="e.g. ml-86"
+                  >
+
+                </div>
+
+
+                <div class="form-group">
+
+                  <label>
+                    Product Name
+                  </label>
+
+                  <input
+                    class="form-input"
+                    id="productName"
+                    required
+                    placeholder="Product name"
+                  >
+
+                </div>
+
+
+                <div class="form-group">
+
+                  <label>
+                    Category
+                  </label>
+
+                  <select
+                    class="form-input"
+                    id="productCategory"
+                    required
+                  ></select>
+
+                </div>
+
+
+                <div class="form-group">
+
+                  <label>
+                    Price (RM)
+                  </label>
+
+                  <input
+                    class="form-input"
+                    id="productPrice"
+                    type="number"
+                    step="0.01"
+                    min="0"
+                    required
+                    placeholder="10.00"
+                  >
+
+                </div>
+
+
+                <div class="form-group">
+
+                  <label>
+                    Icon / Emoji
+                  </label>
+
+                  <input
+                    class="form-input"
+                    id="productIcon"
+                    placeholder="💎"
+                    value="🎮"
+                  >
+
+                </div>
+
+
+                <div class="form-group">
+
+                  <label>
+                    Tag
+                  </label>
+
+                  <input
+                    class="form-input"
+                    id="productTag"
+                    placeholder="Popular / Best Seller / VIP"
+                  >
+
+                </div>
+
+
+                <div class="form-actions">
+
+                  <button
+                    type="button"
+                    class="secondary-btn"
+                    id="cancelProduct"
+                  >
+                    Cancel
+                  </button>
+
+                  <button
+                    type="submit"
+                    class="primary-btn"
+                  >
+                    Save Product
+                  </button>
+
+                </div>
+
+              </div>
+
+            </form>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- ORDERS -->
+
+      <section
+        id="ordersSection"
+        style="display:none"
+      >
+
+        <div class="page-head">
+
+          <div>
+
+            <div class="eyebrow">
+              Orders
+            </div>
+
+            <h1>
+              Orders
+            </h1>
+
+            <p>
+              Orders stored on this device.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="panel">
+
+          <div class="panel-head">
+
+            <h2>
+              Order History
+            </h2>
+
+          </div>
+
+          <div
+            class="panel-body"
+            id="ordersContainer"
+          >
+
+            <div class="empty">
+              No orders stored yet.
+              <br><br>
+              WhatsApp orders are sent directly to your WhatsApp.
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- SETTINGS -->
+
+      <section
+        id="settingsSection"
+        style="display:none"
+      >
+
+        <div class="page-head">
+
+          <div>
+
+            <div class="eyebrow">
+              Configuration
+            </div>
+
+            <h1>
+              Settings
+            </h1>
+
+            <p>
+              Basic Izzerz Store MY settings.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="panel">
+
+          <div class="panel-head">
+
+            <h2>
+              Store Information
+            </h2>
+
+          </div>
+
+          <div class="panel-body">
+
+            <div class="form-grid">
+
+              <div class="form-group">
+
+                <label>
+                  Store Name
+                </label>
+
+                <input
+                  class="form-input"
+                  value="Izzerz Store MY"
+                  id="settingStoreName"
+                >
+
+              </div>
+
+
+              <div class="form-group">
+
+                <label>
+                  WhatsApp Number
+                </label>
+
+                <input
+                  class="form-input"
+                  value="60199910755"
+                  id="settingWhatsapp"
+                >
+
+              </div>
+
+
+              <div class="form-group full">
+
+                <label>
+                  Store Description
+                </label>
+
+                <input
+                  class="form-input"
+                  value="Premium gaming marketplace for Malaysian players."
+                  id="settingDescription"
+                >
+
+              </div>
+
+
+              <div class="form-actions">
+
+                <button
+                  class="primary-btn"
+                  id="saveSettings"
+                  type="button"
+                >
+                  Save Settings
+                </button>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <div class="panel">
+
+          <div class="panel-head">
+
+            <h2>
+              Local Data
+            </h2>
+
+          </div>
+
+          <div class="panel-body">
+
+            <button
+              class="danger-btn"
+              id="clearLocalData"
+            >
+              Clear Admin Product Data
+            </button>
+
+          </div>
+
+        </div>
+
+      </section>
+
+    </main>
+
+  </div>
+
+</div>
+
+
+<div id="toast"></div>
+
+
+<!-- =====================================================
+     STORE DATA
+===================================================== -->
+
+<script src="store.js"></script>
+
+
+<script>
+/* =========================================================
+   IZZERZ STORE MY — ADMIN DASHBOARD
+========================================================= */
+
+(function () {
+
+  "use strict";
+
+
+  /* =========================
+     CONFIG
+  ========================= */
+
+  const ADMIN_PASSWORD = "izz47124712";
+
+  const LOGIN_KEY = "izzerz_admin_logged";
+
+
+  /* =========================
+     ELEMENTS
+  ========================= */
+
+  const loginScreen =
+    document.getElementById("loginScreen");
+
+  const dashboard =
+    document.getElementById("dashboard");
+
+  const loginForm =
+    document.getElementById("loginForm");
+
+  const passwordInput =
+    document.getElementById("adminPassword");
+
+  const loginError =
+    document.getElementById("loginError");
+
+  const showPassword =
+    document.getElementById("showPassword");
+
+  const logoutBtn =
+    document.getElementById("logoutBtn");
+
+  const toast =
+    document.getElementById("toast");
+
+
+  /* =========================
+     TOAST
+  ========================= */
+
+  function showToast(message) {
+
+    toast.textContent = message;
+
+    toast.classList.add("show");
+
+    clearTimeout(window.__toastTimer);
+
+    window.__toastTimer =
+      setTimeout(() => {
+        toast.classList.remove("show");
+      }, 2500);
+
+  }
+
+
+  /* =========================
+     LOGIN
+  ========================= */
+
+  function showDashboard() {
+
+    loginScreen.style.display = "none";
+
+    dashboard.style.display = "block";
+
+    updateDashboard();
+
+  }
+
+
+  function showLogin() {
+
+    dashboard.style.display = "none";
+
+    loginScreen.style.display = "flex";
+
+    passwordInput.value = "";
+
+  }
+
+
+  if (localStorage.getItem(LOGIN_KEY) === "true") {
+
+    showDashboard();
+
+  }
+
+
+  loginForm.addEventListener("submit", function (event) {
+
+    event.preventDefault();
+
+    const password =
+      passwordInput.value.trim();
+
+    if (password === ADMIN_PASSWORD) {
+
+      localStorage.setItem(
+        LOGIN_KEY,
+        "true"
+      );
+
+      loginError.textContent = "";
+
+      showDashboard();
+
+      showToast("Welcome to Admin Dashboard");
+
+    } else {
+
+      loginError.textContent =
+        "Incorrect admin password.";
+
+      passwordInput.value = "";
+
+      passwordInput.focus();
+
+    }
+
+  });
+
+
+  /* =========================
+     SHOW PASSWORD
+  ========================= */
+
+  showPassword.addEventListener(
+    "click",
+    function () {
+
+      if (passwordInput.type === "password") {
+
+        passwordInput.type = "text";
+
+        showPassword.textContent = "🙈";
+
+      } else {
+
+        passwordInput.type = "password";
+
+        showPassword.textContent = "👁";
+
+      }
+
+    }
+  );
+
+
+  /* =========================
+     LOGOUT
+  ========================= */
+
+  logoutBtn.addEventListener(
+    "click",
+    function () {
+
+      localStorage.removeItem(
+        LOGIN_KEY
+      );
+
+      showLogin();
+
+      showToast("Logged out");
+
+    }
+  );
+
+
+  /* =========================
+     NAVIGATION
+  ========================= */
+
+  const sections = {
+    overview: document.getElementById("overviewSection"),
+    products: document.getElementById("productsSection"),
+    orders: document.getElementById("ordersSection"),
+    settings: document.getElementById("settingsSection")
+  };
+
+
+  function openSection(name) {
+
+    Object.values(sections).forEach(
+      section => {
+        section.style.display = "none";
+      }
+    );
+
+    if (sections[name]) {
+      sections[name].style.display = "block";
+    }
+
+    document
+      .querySelectorAll(".side-link[data-section]")
+      .forEach(button => {
+
+        button.classList.toggle(
+          "active",
+          button.dataset.section === name
+        );
+
+      });
+
+    if (name === "products") {
+      renderProducts();
+    }
+
+  }
+
+
+  document
+    .querySelectorAll(".side-link[data-section]")
+    .forEach(button => {
+
+      button.addEventListener(
+        "click",
+        () => openSection(button.dataset.section)
+      );
+
+    });
+
+
+  document
+    .querySelectorAll("[data-go]")
+    .forEach(button => {
+
+      button.addEventListener(
+        "click",
+        () => openSection(button.dataset.go)
+      );
+
+    });
+
+
+  /* =========================
+     PRODUCT DATA
+  ========================= */
+
+  function getProducts() {
+
+    if (
+      typeof loadAdminProducts === "function"
+    ) {
+
+      return loadAdminProducts();
+
+    }
+
+    return (
+      window.STORE_DATA?.products || []
+    );
+
+  }
+
+
+  function saveProducts(products) {
+
+    if (
+      typeof saveAdminProducts === "function"
+    ) {
+
+      saveAdminProducts(products);
+
+    }
+
+  }
+
+
+  /* =========================
+     CATEGORIES
+  ========================= */
+
+  function getCategories() {
+
+    return (
+      window.STORE_DATA?.categories || []
+    );
+
+  }
+
+
+  function categoryName(id) {
+
+    const category =
+      getCategories().find(
+        item => item.id === id
+      );
+
+    return category
+      ? category.name
+      : id;
+
+  }
+
+
+  function setupCategories() {
+
+    const filter =
+      document.getElementById("categoryFilter");
+
+    const select =
+      document.getElementById("productCategory");
+
+    if (!filter || !select) return;
+
+    filter.innerHTML =
+      '<option value="all">All Categories</option>';
+
+    select.innerHTML = "";
+
+    getCategories().forEach(category => {
+
+      filter.innerHTML += `
+        <option value="${category.id}">
+          ${category.icon} ${category.name}
+        </option>
+      `;
+
+      select.innerHTML += `
+        <option value="${category.id}">
+          ${category.icon} ${category.name}
+        </option>
+      `;
+
+    });
+
+  }
+
+
+  /* =========================
+     RENDER PRODUCTS
+  ========================= */
+
+  function renderProducts() {
+
+    const body =
+      document.getElementById(
+        "productTableBody"
+      );
+
+    if (!body) return;
+
+    let products =
+      getProducts();
+
+    const search =
+      document
+        .getElementById("productSearch")
+        .value
+        .trim()
+        .toLowerCase();
+
+    const category =
+      document
+        .getElementById("categoryFilter")
+        .value;
+
+    products =
+      products.filter(product => {
+
+        const matchesSearch =
+          !search ||
+          product.name
+            .toLowerCase()
+            .includes(search) ||
+          product.id
+            .toLowerCase()
+            .includes(search);
+
+        const matchesCategory =
+          category === "all" ||
+          product.category === category;
+
+        return (
+          matchesSearch &&
+          matchesCategory
+        );
+
+      });
+
+
+    if (!products.length) {
+
+      body.innerHTML = `
+        <tr>
+          <td colspan="5">
+            <div class="empty">
+              No products found.
+            </div>
+          </td>
+        </tr>
+      `;
+
+      return;
+
+    }
+
+
+    body.innerHTML =
+      products.map(product => `
+
+        <tr>
+
+          <td>
+
+            <div class="product-name">
+
+              <div class="product-icon">
+                ${product.icon || "🎮"}
+              </div>
+
+              <div>
+                ${escapeHTML(product.name)}
+
+                <div
+                  style="
+                    color:#666;
+                    font-size:10px;
+                    margin-top:3px;
+                  "
+                >
+                  ${escapeHTML(product.id)}
+                </div>
+
+              </div>
+
+            </div>
+
+          </td>
+
+
+          <td>
+            ${escapeHTML(categoryName(product.category))}
+          </td>
+
+
+          <td class="price">
+            RM ${Number(product.price).toFixed(2)}
+          </td>
+
+
+          <td>
+
+            ${
+              product.tag
+              ? `<span class="tag">
+                   ${escapeHTML(product.tag)}
+                 </span>`
+              : `<span style="color:#555">—</span>`
+            }
+
+          </td>
+
+
+          <td>
+
+            <div class="actions">
+
+              <button
+                class="small-btn"
+                data-edit="${escapeHTML(product.id)}"
+              >
+                Edit
+              </button>
+
+              <button
+                class="small-btn"
+                data-delete="${escapeHTML(product.id)}"
+              >
+                Delete
+              </button>
+
+            </div>
+
+          </td>
+
+        </tr>
+
+      `).join("");
+
+
+    body
+      .querySelectorAll("[data-edit]")
+      .forEach(button => {
+
+        button.addEventListener(
+          "click",
+          () => editProduct(button.dataset.edit)
+        );
+
+      });
+
+
+    body
+      .querySelectorAll("[data-delete]")
+      .forEach(button => {
+
+        button.addEventListener(
+          "click",
+          () => deleteProduct(button.dataset.delete)
+        );
+
+      });
+
+  }
+
+
+  /* =========================
+     ESCAPE HTML
+  ========================= */
+
+  function escapeHTML(value) {
+
+    return String(value ?? "")
+      .replace(/&/g,"&amp;")
+      .replace(/</g,"&lt;")
+      .replace(/>/g,"&gt;")
+      .replace(/"/g,"&quot;")
+      .replace(/'/g,"&#039;");
+
+  }
+
+
+  /* =========================
+     PRODUCT SEARCH
+  ========================= */
+
+  document
+    .getElementById("productSearch")
+    .addEventListener(
+      "input",
+      renderProducts
+    );
+
+
+  document
+    .getElementById("categoryFilter")
+    .addEventListener(
+      "change",
+      renderProducts
+    );
+
+
+  /* =========================
+     PRODUCT FORM
+  ========================= */
+
+  const productForm =
+    document.getElementById("productForm");
+
+  const productFormPanel =
+    document.getElementById(
+      "productFormPanel"
+    );
+
+
+  let editingProductId = null;
+
+
+  function openProductForm(product = null) {
+
+    productFormPanel.style.display = "block";
+
+    if (product) {
+
+      editingProductId =
+        product.id;
+
+      document.getElementById(
+        "productFormTitle"
+      ).textContent =
+        "Edit Product";
+
+      document.getElementById(
+        "productId"
+      ).value =
+        product.id;
+
+      document.getElementById(
+        "productId"
+      ).disabled = true;
+
+      document.getElementById(
+        "productName"
+      ).value =
+        product.name;
+
+      document.getElementById(
+        "productCategory"
+      ).value =
+        product.category;
+
+      document.getElementById(
+        "productPrice"
+      ).value =
+        product.price;
+
+      document.getElementById(
+        "productIcon"
+      ).value =
+        product.icon || "🎮";
+
+      document.getElementById(
+        "productTag"
+      ).value =
+        product.tag || "";
+
+    } else {
+
+      editingProductId = null;
+
+      document.getElementById(
+        "productFormTitle"
+      ).textContent =
+        "Add Product";
+
+      productForm.reset();
+
+      document.getElementById(
+        "productId"
+      ).disabled = false;
+
+      document.getElementById(
+        "productIcon"
+      ).value =
+        "🎮";
+
+    }
+
+    productFormPanel.scrollIntoView({
+      behavior: "smooth",
+      block: "center"
+    });
+
+  }
+
+
+  function closeProductForm() {
+
+    productFormPanel.style.display =
+      "none";
+
+    editingProductId = null;
+
+    productForm.reset();
+
+    document.getElementById(
+      "productId"
+    ).disabled = false;
+
+  }
+
+
+  document
+    .getElementById("addProductBtn")
+    .addEventListener(
+      "click",
+      () => openProductForm()
+    );
+
+
+  document
+    .getElementById("quickAddProduct")
+    .addEventListener(
+      "click",
+      () => {
+
+        openSection("products");
+
+        setTimeout(
+          () => openProductForm(),
+          100
+        );
+
+      }
+    );
+
+
+  document
+    .getElementById("cancelProduct")
+    .addEventListener(
+      "click",
+      closeProductForm
+    );
+
+
+  /* =========================
+     SAVE PRODUCT
+  ========================= */
+
+  productForm.addEventListener(
+    "submit",
+    function (event) {
+
+      event.preventDefault();
+
+      const products =
+        getProducts();
+
+      const id =
+        document
+          .getElementById("productId")
+          .value
+          .trim();
+
+      const name =
+        document
+          .getElementById("productName")
+          .value
+          .trim();
+
+      const category =
+        document
+          .getElementById("productCategory")
+          .value;
+
+      const price =
+        Number(
+          document
+            .getElementById("productPrice")
+            .value
+        );
+
+      const icon =
+        document
+          .getElementById("productIcon")
+          .value
+          .trim() || "🎮";
+
+      const tag =
+        document
+          .getElementById("productTag")
+          .value
+          .trim();
+
+
+      if (!id || !name || !category) {
+
+        showToast(
+          "Please fill in all required fields."
+        );
+
+        return;
+
+      }
+
+
+      if (!Number.isFinite(price)) {
+
+        showToast(
+          "Please enter a valid price."
+        );
+
+        return;
+
+      }
+
+
+      if (editingProductId) {
+
+        const index =
+          products.findIndex(
+            product =>
+              product.id === editingProductId
+          );
+
+        if (index === -1) {
+
+          showToast(
+            "Product not found."
+          );
+
+          return;
+
+        }
+
+        products[index] = {
+          ...products[index],
+          name,
+          category,
+          price,
+          icon,
+          tag
+        };
+
+        showToast(
+          "Product updated successfully."
+        );
+
+      } else {
+
+        if (
+          products.some(
+            product => product.id === id
+          )
+        ) {
+
+          showToast(
+            "Product ID already exists."
+          );
+
+          return;
+
+        }
+
+        products.push({
+          id,
+          name,
+          category,
+          price,
+          icon,
+          tag
+        });
+
+        showToast(
+          "Product added successfully."
+        );
+
+      }
+
+
+      saveProducts(products);
+
+      closeProductForm();
+
+      renderProducts();
+
+      updateDashboard();
+
+    }
+  );
+
+
+  /* =========================
+     EDIT PRODUCT
+  ========================= */
+
+  function editProduct(id) {
+
+    const product =
+      getProducts().find(
+        item => item.id === id
+      );
+
+    if (!product) return;
+
+    openProductForm(product);
+
+  }
+
+
+  /* =========================
+     DELETE PRODUCT
+  ========================= */
+
+  function deleteProduct(id) {
+
+    const product =
+      getProducts().find(
+        item => item.id === id
+      );
+
+    if (!product) return;
+
+
+    const confirmed =
+      confirm(
+        `Delete "${product.name}"?`
+      );
+
+
+    if (!confirmed) return;
+
+
+    const products =
+      getProducts().filter(
+        item => item.id !== id
+      );
+
+
+    saveProducts(products);
+
+    renderProducts();
+
+    updateDashboard();
+
+    showToast(
+      "Product deleted."
+    );
+
+  }
+
+
+  /* =========================
+     RECENT PRODUCTS
+  ========================= */
+
+  function renderRecentProducts() {
+
+    const container =
+      document.getElementById(
+        "recentProducts"
+      );
+
+    const products =
+      getProducts().slice(0,6);
+
+
+    if (!products.length) {
+
+      container.innerHTML = `
+        <div class="empty">
+          No products available.
+        </div>
+      `;
+
+      return;
+
+    }
+
+
+    container.innerHTML = `
+
+      <div class="table-wrap">
+
+        <table>
+
+          <thead>
+
+            <tr>
+              <th>Product</th>
+              <th>Category</th>
+              <th>Price</th>
+              <th>Tag</th>
+            </tr>
+
+          </thead>
+
+          <tbody>
+
+            ${
+              products.map(product => `
+
+                <tr>
+
+                  <td>
+
+                    <div class="product-name">
+
+                      <div class="product-icon">
+                        ${product.icon || "🎮"}
+                      </div>
+
+                      ${escapeHTML(product.name)}
+
+                    </div>
+
+                  </td>
+
+                  <td>
+                    ${escapeHTML(categoryName(product.category))}
+                  </td>
+
+                  <td class="price">
+                    RM ${Number(product.price).toFixed(2)}
+                  </td>
+
+                  <td>
+                    ${
+                      product.tag
+                      ? `<span class="tag">
+                           ${escapeHTML(product.tag)}
+                         </span>`
+                      : "—"
+                    }
+                  </td>
+
+                </tr>
+
+              `).join("")
+            }
+
+          </tbody>
+
+        </table>
+
+      </div>
+
+    `;
+
+  }
+
+
+  /* =========================
+     DASHBOARD STATS
+  ========================= */
+
+  function updateDashboard() {
+
+    const products =
+      getProducts();
+
+    const cart =
+      typeof loadCart === "function"
+      ? loadCart()
+      : [];
+
+
+    document.getElementById(
+      "statProducts"
+    ).textContent =
+      products.length;
+
+
+    const cartCount =
+      cart.reduce(
+        (total,item) =>
+          total + Number(item.qty || 0),
+        0
+      );
+
+
+    const cartValue =
+      cart.reduce(
+        (total,item) =>
+          total +
+          Number(item.price || 0) *
+          Number(item.qty || 0),
+        0
+      );
+
+
+    document.getElementById(
+      "statCart"
+    ).textContent =
+      cartCount;
+
+
+    document.getElementById(
+      "statValue"
+    ).textContent =
+      "RM " +
+      cartValue.toFixed(2);
+
+
+    renderRecentProducts();
+
+  }
+
+
+  /* =========================
+     REFRESH
+  ========================= */
+
+  document
+    .getElementById("refreshDashboard")
+    .addEventListener(
+      "click",
+      function () {
+
+        updateDashboard();
+
+        showToast(
+          "Dashboard refreshed."
+        );
+
+      }
+    );
+
+
+  /* =========================
+     DATE
+  ========================= */
+
+  function updateDate() {
+
+    const date =
+      new Date();
+
+    document.getElementById(
+      "currentDate"
+    ).textContent =
+      date.toLocaleDateString(
+        "en-MY",
+        {
+          weekday: "short",
+          day: "numeric",
+          month: "short",
+          year: "numeric"
+        }
+      );
+
+  }
+
+
+  /* =========================
+     SETTINGS
+  ========================= */
+
+  document
+    .getElementById("saveSettings")
+    .addEventListener(
+      "click",
+      function () {
+
+        const settings = {
+
+          storeName:
+            document
+              .getElementById("settingStoreName")
+              .value,
+
+          whatsapp:
+            document
+              .getElementById("settingWhatsapp")
+              .value,
+
+          description:
+            document
+              .getElementById("settingDescription")
+              .value
+
+        };
+
+
+        localStorage.setItem(
+          "izzerz_settings",
+          JSON.stringify(settings)
+        );
+
+
+        showToast(
+          "Settings saved."
+        );
+
+      }
+    );
+
+
+  /* =========================
+     LOAD SETTINGS
+  ========================= */
+
+  function loadSettings() {
+
+    try {
+
+      const saved =
+        JSON.parse(
+          localStorage.getItem(
+            "izzerz_settings"
+          )
+        );
+
+
+      if (!saved) return;
+
+
+      if (saved.storeName) {
+
+        document.getElementById(
+          "settingStoreName"
+        ).value =
+          saved.storeName;
+
+      }
+
+
+      if (saved.whatsapp) {
+
+        document.getElementById(
+          "settingWhatsapp"
+        ).value =
+          saved.whatsapp;
+
+      }
+
+
+      if (saved.description) {
+
+        document.getElementById(
+          "settingDescription"
+        ).value =
+          saved.description;
+
+      }
+
+    } catch (error) {
+
+      console.warn(
+        "Could not load settings."
+      );
+
+    }
+
+  }
+
+
+  /* =========================
+     CLEAR ADMIN PRODUCT DATA
+  ========================= */
+
+  document
+    .getElementById("clearLocalData")
+    .addEventListener(
+      "click",
+      function () {
+
+        const confirmed =
+          confirm(
+            "Reset admin product data to the original store.js products?"
+          );
+
+
+        if (!confirmed) return;
+
+
+        localStorage.removeItem(
+          "izzerz_admin_products"
+        );
+
+
+        updateDashboard();
+
+        renderProducts();
+
+
+        showToast(
+          "Product data reset."
+        );
+
+      }
+    );
+
+
+  /* =========================
+     INIT
+  ========================= */
+
+  setupCategories();
+
+  loadSettings();
+
+  updateDate();
+
+  setInterval(
+    updateDate,
+    60000
+  );
+
+
+  /* =========================
+     CART UPDATES
+  ========================= */
+
+  document.addEventListener(
+    "cartUpdated",
+    updateDashboard
+  );
+
+
+})();
+</script>
+
+</body>
+</html>
