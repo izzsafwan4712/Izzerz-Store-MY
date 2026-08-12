@@ -1,0 +1,1753 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+
+<title>Admin Dashboard — Izzerz Store MY</title>
+<meta name="theme-color" content="#050505">
+
+<link rel="icon" type="image/jpeg" href="icon.jpg">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=Sora:wght@500;600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --bg:#050505;
+  --royal:#0B1F4D;
+  --electric:#4F8CFF;
+  --electric-soft:#9dc4ff;
+  --text:#f5f8ff;
+  --muted:#9aa3b8;
+  --glass:rgba(255,255,255,.06);
+  --glass-strong:rgba(255,255,255,.1);
+  --border:rgba(255,255,255,.09);
+  --radius:24px;
+  --shadow-glow:
+    0 0 40px rgba(79,140,255,.45),
+    0 0 90px rgba(79,140,255,.22);
+  --font-h:"Space Grotesk",system-ui,sans-serif;
+  --font-b:"Inter",system-ui,sans-serif;
+  --font-btn:"Sora",system-ui,sans-serif;
+}
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+html{
+  scroll-behavior:smooth;
+  color-scheme:dark;
+}
+
+body{
+  font-family:var(--font-b);
+  color:var(--text);
+  background:
+    radial-gradient(1200px 600px at 80% -10%,
+      rgba(79,140,255,.18),
+      transparent 60%),
+    radial-gradient(900px 500px at -10% 30%,
+      rgba(11,31,77,.7),
+      transparent 60%),
+    var(--bg);
+  min-height:100vh;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+}
+
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  background:
+    radial-gradient(circle at 20% 20%,
+      rgba(79,140,255,.08),
+      transparent 25%),
+    radial-gradient(circle at 80% 70%,
+      rgba(79,140,255,.06),
+      transparent 25%);
+  animation:bgMove 10s ease-in-out infinite alternate;
+}
+
+@keyframes bgMove{
+  from{transform:scale(1)}
+  to{transform:scale(1.08)}
+}
+
+a{
+  color:inherit;
+  text-decoration:none;
+}
+
+button,
+input,
+select{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+h1,h2,h3,h4{
+  font-family:var(--font-h);
+  line-height:1.1;
+}
+
+.gradient-text{
+  background:linear-gradient(
+    135deg,
+    #fff 0%,
+    var(--electric) 55%,
+    var(--electric-soft) 100%
+  );
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+
+.glass{
+  background:
+    linear-gradient(
+      135deg,
+      var(--glass),
+      rgba(255,255,255,.02)
+    );
+  backdrop-filter:blur(24px) saturate(160%);
+  -webkit-backdrop-filter:blur(24px) saturate(160%);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+}
+
+/* =========================
+   LOGIN
+========================= */
+
+.login-screen{
+  position:fixed;
+  inset:0;
+  z-index:999;
+  display:grid;
+  place-items:center;
+  padding:20px;
+  background:#000;
+  transition:.6s ease;
+}
+
+.login-screen.hide{
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+}
+
+.login-glow{
+  position:absolute;
+  width:600px;
+  height:600px;
+  border-radius:50%;
+  background:radial-gradient(
+    circle,
+    rgba(79,140,255,.3),
+    transparent 65%
+  );
+  filter:blur(30px);
+  animation:loginGlow 5s ease-in-out infinite alternate;
+}
+
+@keyframes loginGlow{
+  from{transform:scale(.85)}
+  to{transform:scale(1.15)}
+}
+
+.login-box{
+  position:relative;
+  width:min(430px,100%);
+  padding:34px;
+  text-align:center;
+  animation:loginIn .8s cubic-bezier(.2,.7,.2,1);
+}
+
+@keyframes loginIn{
+  from{
+    opacity:0;
+    transform:translateY(30px) scale(.95);
+    filter:blur(10px);
+  }
+  to{
+    opacity:1;
+    transform:none;
+    filter:blur(0);
+  }
+}
+
+.logo{
+  width:82px;
+  height:82px;
+  margin:0 auto 20px;
+  border-radius:22px;
+  overflow:hidden;
+  background:linear-gradient(
+    135deg,
+    var(--electric),
+    var(--royal)
+  );
+  box-shadow:var(--shadow-glow);
+}
+
+.logo img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.login-box h1{
+  font-size:32px;
+}
+
+.login-box p{
+  margin-top:10px;
+  color:var(--muted);
+}
+
+.login-form{
+  margin-top:28px;
+  text-align:left;
+}
+
+.field{
+  display:flex;
+  flex-direction:column;
+  gap:7px;
+  margin-bottom:15px;
+}
+
+.field label{
+  color:var(--muted);
+  font-family:var(--font-btn);
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:.1em;
+}
+
+.field input,
+.field select{
+  width:100%;
+  padding:13px 14px;
+  color:var(--text);
+  background:rgba(255,255,255,.05);
+  border:1px solid var(--border);
+  border-radius:13px;
+  outline:none;
+}
+
+.field input:focus,
+.field select:focus{
+  border-color:var(--electric);
+  box-shadow:0 0 0 4px rgba(79,140,255,.12);
+}
+
+.login-error{
+  display:none;
+  margin-bottom:14px;
+  padding:10px 12px;
+  border-radius:12px;
+  background:rgba(255,80,80,.1);
+  border:1px solid rgba(255,80,80,.25);
+  color:#ff8585;
+  font-size:13px;
+}
+
+.login-error.show{
+  display:block;
+}
+
+/* =========================
+   APP
+========================= */
+
+.app{
+  display:none;
+  min-height:100vh;
+}
+
+.app.show{
+  display:block;
+}
+
+.topbar{
+  position:sticky;
+  top:12px;
+  z-index:100;
+  max-width:1240px;
+  margin:12px auto;
+  padding:12px 18px;
+  display:flex;
+  align-items:center;
+  gap:14px;
+  border-radius:20px;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  font-family:var(--font-h);
+  font-weight:700;
+}
+
+.brand-logo{
+  width:36px;
+  height:36px;
+  border-radius:10px;
+  overflow:hidden;
+  box-shadow:var(--shadow-glow);
+}
+
+.brand-logo img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.brand span{
+  color:var(--electric);
+}
+
+.top-actions{
+  margin-left:auto;
+  display:flex;
+  gap:8px;
+}
+
+.btn{
+  border:1px solid transparent;
+  border-radius:14px;
+  padding:11px 16px;
+  font-family:var(--font-btn);
+  font-size:12px;
+  font-weight:600;
+  transition:.25s;
+}
+
+.btn-primary{
+  color:#04122e;
+  background:linear-gradient(
+    135deg,
+    var(--electric),
+    #2f6bff
+  );
+  box-shadow:
+    0 10px 30px -8px rgba(79,140,255,.7);
+}
+
+.btn-primary:hover{
+  transform:translateY(-2px);
+  box-shadow:
+    0 16px 40px -6px rgba(79,140,255,.9);
+}
+
+.btn-ghost{
+  color:var(--text);
+  background:var(--glass);
+  border-color:var(--border);
+}
+
+.btn-ghost:hover{
+  border-color:var(--electric);
+  color:var(--electric-soft);
+}
+
+/* =========================
+   MAIN
+========================= */
+
+.container{
+  width:min(1240px,calc(100% - 40px));
+  margin:0 auto;
+  padding:45px 0 80px;
+}
+
+.page-head{
+  margin-bottom:30px;
+}
+
+.eyebrow{
+  display:inline-block;
+  margin-bottom:12px;
+  padding:6px 12px;
+  border:1px solid var(--border);
+  border-radius:999px;
+  background:rgba(79,140,255,.08);
+  color:var(--electric-soft);
+  font-family:var(--font-btn);
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:.18em;
+}
+
+.page-head h1{
+  font-size:clamp(35px,6vw,60px);
+}
+
+.page-head p{
+  margin-top:10px;
+  color:var(--muted);
+}
+
+/* =========================
+   STATS
+========================= */
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:14px;
+  margin-bottom:24px;
+}
+
+.stat{
+  padding:22px;
+  position:relative;
+  overflow:hidden;
+}
+
+.stat::after{
+  content:"";
+  position:absolute;
+  width:130px;
+  height:130px;
+  right:-50px;
+  top:-50px;
+  border-radius:50%;
+  background:rgba(79,140,255,.15);
+  filter:blur(10px);
+}
+
+.stat-icon{
+  font-size:25px;
+  margin-bottom:12px;
+}
+
+.stat b{
+  display:block;
+  font-family:var(--font-h);
+  font-size:28px;
+}
+
+.stat span{
+  color:var(--muted);
+  font-size:12px;
+}
+
+/* =========================
+   TOOLBAR
+========================= */
+
+.toolbar{
+  padding:15px;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-bottom:18px;
+}
+
+.search{
+  flex:1;
+  min-width:220px;
+}
+
+.search input{
+  width:100%;
+  padding:12px 14px;
+  background:rgba(255,255,255,.04);
+  border:1px solid var(--border);
+  border-radius:13px;
+  color:var(--text);
+  outline:none;
+}
+
+.search input:focus{
+  border-color:var(--electric);
+}
+
+/* =========================
+   PRODUCTS
+========================= */
+
+.products{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(250px,1fr));
+  gap:16px;
+}
+
+.product{
+  padding:18px;
+  position:relative;
+  overflow:hidden;
+  transition:.3s;
+}
+
+.product:hover{
+  transform:translateY(-5px);
+  box-shadow:var(--shadow-glow);
+}
+
+.product-icon{
+  width:58px;
+  height:58px;
+  border-radius:17px;
+  display:grid;
+  place-items:center;
+  font-size:30px;
+  background:linear-gradient(
+    135deg,
+    rgba(79,140,255,.25),
+    rgba(11,31,77,.55)
+  );
+  margin-bottom:15px;
+}
+
+.product h3{
+  font-size:16px;
+  min-height:38px;
+}
+
+.product-category{
+  margin-top:5px;
+  color:var(--electric-soft);
+  font-family:var(--font-btn);
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:.1em;
+}
+
+.product-price{
+  margin-top:12px;
+  font-family:var(--font-h);
+  font-size:21px;
+}
+
+.product-tag{
+  display:inline-block;
+  margin-top:9px;
+  padding:5px 8px;
+  border-radius:8px;
+  background:rgba(79,140,255,.12);
+  color:var(--electric-soft);
+  font-size:10px;
+}
+
+.product-actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin-top:15px;
+}
+
+.btn-danger{
+  color:#ff8585;
+  background:rgba(255,70,70,.08);
+  border-color:rgba(255,70,70,.18);
+}
+
+.btn-danger:hover{
+  background:rgba(255,70,70,.15);
+  border-color:#ff6b6b;
+}
+
+/* =========================
+   MODAL
+========================= */
+
+.modal{
+  position:fixed;
+  inset:0;
+  z-index:500;
+  display:none;
+  place-items:center;
+  padding:20px;
+  background:rgba(0,0,0,.65);
+  backdrop-filter:blur(8px);
+}
+
+.modal.open{
+  display:grid;
+}
+
+.modal-card{
+  width:min(520px,100%);
+  max-height:90vh;
+  overflow:auto;
+  padding:25px;
+  animation:modalIn .35s ease;
+}
+
+@keyframes modalIn{
+  from{
+    opacity:0;
+    transform:translateY(20px) scale(.96);
+  }
+  to{
+    opacity:1;
+    transform:none;
+  }
+}
+
+.modal-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:20px;
+}
+
+.close{
+  width:38px;
+  height:38px;
+  border-radius:11px;
+  border:1px solid var(--border);
+  background:var(--glass);
+  color:var(--text);
+}
+
+.form-actions{
+  display:flex;
+  gap:10px;
+  margin-top:8px;
+}
+
+.form-actions button{
+  flex:1;
+}
+
+/* =========================
+   TOAST
+========================= */
+
+.toast{
+  position:fixed;
+  right:20px;
+  bottom:20px;
+  z-index:1000;
+  padding:13px 18px;
+  border-radius:14px;
+  background:rgba(10,15,30,.9);
+  border:1px solid var(--border);
+  backdrop-filter:blur(20px);
+  box-shadow:var(--shadow-glow);
+  transform:translateY(20px);
+  opacity:0;
+  pointer-events:none;
+  transition:.3s;
+  font-size:13px;
+}
+
+.toast.show{
+  opacity:1;
+  transform:none;
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:800px){
+
+  .topbar{
+    margin:8px;
+  }
+
+  .brand-name{
+    display:none;
+  }
+
+  .container{
+    width:min(100% - 24px,1240px);
+    padding-top:30px;
+  }
+
+  .stats{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .products{
+    grid-template-columns:1fr;
+  }
+
+}
+
+@media(max-width:480px){
+
+  .top-actions .btn{
+    padding:10px;
+    font-size:11px;
+  }
+
+  .stats{
+    gap:9px;
+  }
+
+  .stat{
+    padding:16px;
+  }
+
+  .stat b{
+    font-size:22px;
+  }
+
+}
+</style>
+</head>
+
+<body>
+
+<!-- =========================
+     LOGIN
+========================= -->
+
+<section class="login-screen" id="loginScreen">
+
+  <div class="login-glow"></div>
+
+  <div class="login-box glass">
+
+    <div class="logo">
+      <img src="icon.jpg" alt="Izzerz Store MY">
+    </div>
+
+    <h1>
+      Admin <span class="gradient-text">Dashboard</span>
+    </h1>
+
+    <p>Izzerz Store MY management panel</p>
+
+    <form class="login-form" id="loginForm">
+
+      <div class="field">
+        <label>Password</label>
+        <input
+          id="adminPassword"
+          type="password"
+          placeholder="Enter admin password"
+          autocomplete="current-password"
+          required
+        >
+      </div>
+
+      <div class="login-error" id="loginError">
+        Password salah.
+      </div>
+
+      <button
+        class="btn btn-primary"
+        type="submit"
+        style="width:100%;"
+      >
+        🔐 Login Dashboard
+      </button>
+
+    </form>
+
+  </div>
+</section>
+
+
+<!-- =========================
+     DASHBOARD
+========================= -->
+
+<div class="app" id="app">
+
+  <header class="topbar glass">
+
+    <a href="index.html" class="brand">
+
+      <span class="brand-logo">
+        <img src="icon.jpg" alt="Izzerz Store MY">
+      </span>
+
+      <span class="brand-name">
+        IZZERZ <span>STORE MY</span>
+      </span>
+
+    </a>
+
+    <div class="top-actions">
+
+      <a
+        href="index.html"
+        class="btn btn-ghost"
+      >
+        🌐 View Store
+      </a>
+
+      <button
+        class="btn btn-ghost"
+        id="logoutBtn"
+      >
+        Logout
+      </button>
+
+    </div>
+
+  </header>
+
+
+  <main class="container">
+
+    <div class="page-head">
+
+      <span class="eyebrow">
+        Control Center
+      </span>
+
+      <h1>
+        Admin <span class="gradient-text">Dashboard</span>
+      </h1>
+
+      <p>
+        Manage products, prices and your Izzerz Store MY catalogue.
+      </p>
+
+    </div>
+
+
+    <!-- STATS -->
+
+    <section class="stats">
+
+      <div class="stat glass">
+        <div class="stat-icon">📦</div>
+        <b id="statProducts">0</b>
+        <span>Total Products</span>
+      </div>
+
+      <div class="stat glass">
+        <div class="stat-icon">🎮</div>
+        <b id="statCategories">0</b>
+        <span>Categories</span>
+      </div>
+
+      <div class="stat glass">
+        <div class="stat-icon">💰</div>
+        <b id="statAverage">RM 0.00</b>
+        <span>Average Price</span>
+      </div>
+
+      <div class="stat glass">
+        <div class="stat-icon">⚡</div>
+        <b>LIVE</b>
+        <span>Dashboard Status</span>
+      </div>
+
+    </section>
+
+
+    <!-- TOOLBAR -->
+
+    <section class="toolbar glass">
+
+      <div class="search">
+        <input
+          id="searchInput"
+          type="search"
+          placeholder="Search product..."
+        >
+      </div>
+
+      <button
+        class="btn btn-primary"
+        id="addProductBtn"
+      >
+        ＋ Add Product
+      </button>
+
+      <button
+        class="btn btn-ghost"
+        id="resetBtn"
+      >
+        ↻ Reset Products
+      </button>
+
+    </section>
+
+
+    <!-- PRODUCTS -->
+
+    <section
+      class="products"
+      id="productsList"
+    ></section>
+
+  </main>
+
+</div>
+
+
+<!-- =========================
+     PRODUCT MODAL
+========================= -->
+
+<div class="modal" id="productModal">
+
+  <div class="modal-card glass">
+
+    <div class="modal-head">
+
+      <h2 id="modalTitle">
+        Add Product
+      </h2>
+
+      <button
+        class="close"
+        id="closeModal"
+      >
+        ✕
+      </button>
+
+    </div>
+
+
+    <form id="productForm">
+
+      <input
+        type="hidden"
+        id="productId"
+      >
+
+      <div class="field">
+
+        <label>Product Name</label>
+
+        <input
+          id="productName"
+          required
+          placeholder="Example: 500 Robux"
+        >
+
+      </div>
+
+
+      <div class="field">
+
+        <label>Category</label>
+
+        <select
+          id="productCategory"
+          required
+        ></select>
+
+      </div>
+
+
+      <div class="field">
+
+        <label>Price (RM)</label>
+
+        <input
+          id="productPrice"
+          type="number"
+          step="0.01"
+          min="0"
+          required
+          placeholder="19.00"
+        >
+
+      </div>
+
+
+      <div class="field">
+
+        <label>Icon / Emoji</label>
+
+        <input
+          id="productIcon"
+          maxlength="8"
+          placeholder="💎"
+        >
+
+      </div>
+
+
+      <div class="field">
+
+        <label>Tag</label>
+
+        <input
+          id="productTag"
+          placeholder="Popular / Best Seller / VIP"
+        >
+
+      </div>
+
+
+      <div class="form-actions">
+
+        <button
+          type="button"
+          class="btn btn-ghost"
+          id="cancelModal"
+        >
+          Cancel
+        </button>
+
+        <button
+          type="submit"
+          class="btn btn-primary"
+        >
+          💾 Save Product
+        </button>
+
+      </div>
+
+    </form>
+
+  </div>
+
+</div>
+
+
+<div class="toast" id="toast"></div>
+
+
+<script src="store.js"></script>
+
+<script>
+/* =========================================================
+   IZZERZ ADMIN DASHBOARD
+   ========================================================= */
+
+const ADMIN_PASSWORD = "izz47124712";
+
+const loginScreen = document.getElementById("loginScreen");
+const app = document.getElementById("app");
+const loginForm = document.getElementById("loginForm");
+const passwordInput = document.getElementById("adminPassword");
+const loginError = document.getElementById("loginError");
+
+const productsList = document.getElementById("productsList");
+const searchInput = document.getElementById("searchInput");
+
+const productModal = document.getElementById("productModal");
+const productForm = document.getElementById("productForm");
+
+const productId = document.getElementById("productId");
+const productName = document.getElementById("productName");
+const productCategory = document.getElementById("productCategory");
+const productPrice = document.getElementById("productPrice");
+const productIcon = document.getElementById("productIcon");
+const productTag = document.getElementById("productTag");
+
+const statProducts = document.getElementById("statProducts");
+const statCategories = document.getElementById("statCategories");
+const statAverage = document.getElementById("statAverage");
+
+const toast = document.getElementById("toast");
+
+
+/* =========================
+   LOGIN
+========================= */
+
+loginForm.addEventListener("submit", function(e){
+
+  e.preventDefault();
+
+  if(passwordInput.value === ADMIN_PASSWORD){
+
+    sessionStorage.setItem(
+      "izzerz_admin_logged",
+      "1"
+    );
+
+    loginError.classList.remove("show");
+    loginScreen.classList.add("hide");
+
+    app.classList.add("show");
+
+    renderDashboard();
+
+  }else{
+
+    loginError.classList.add("show");
+
+    passwordInput.value = "";
+    passwordInput.focus();
+
+  }
+
+});
+
+
+/* =========================
+   SESSION
+========================= */
+
+if(
+  sessionStorage.getItem(
+    "izzerz_admin_logged"
+  ) === "1"
+){
+
+  loginScreen.classList.add("hide");
+  app.classList.add("show");
+
+}
+
+
+/* =========================
+   LOGOUT
+========================= */
+
+document
+  .getElementById("logoutBtn")
+  .addEventListener("click", () => {
+
+    sessionStorage.removeItem(
+      "izzerz_admin_logged"
+    );
+
+    location.reload();
+
+  });
+
+
+/* =========================
+   DATA
+========================= */
+
+function getProductsData(){
+
+  if(typeof loadAdminProducts === "function"){
+    return loadAdminProducts();
+  }
+
+  return STORE_DATA.products;
+
+}
+
+
+function saveProductsData(products){
+
+  if(typeof saveAdminProducts === "function"){
+
+    saveAdminProducts(products);
+
+  }else{
+
+    localStorage.setItem(
+      "izzerz_admin_products",
+      JSON.stringify(products)
+    );
+
+  }
+
+}
+
+
+/* =========================
+   CATEGORY SELECT
+========================= */
+
+function renderCategorySelect(){
+
+  productCategory.innerHTML = "";
+
+  const categories =
+    typeof getCategories === "function"
+      ? getCategories()
+      : STORE_DATA.categories;
+
+  categories.forEach(category => {
+
+    const option =
+      document.createElement("option");
+
+    option.value = category.id;
+
+    option.textContent =
+      category.icon + " " + category.name;
+
+    productCategory.appendChild(option);
+
+  });
+
+}
+
+
+/* =========================
+   DASHBOARD
+========================= */
+
+function renderDashboard(){
+
+  renderCategorySelect();
+  renderProducts();
+  updateStats();
+
+}
+
+
+/* =========================
+   PRODUCTS
+========================= */
+
+function renderProducts(){
+
+  const products =
+    getProductsData();
+
+  const search =
+    searchInput.value
+      .trim()
+      .toLowerCase();
+
+  const filtered =
+    products.filter(product => {
+
+      return (
+        product.name
+          .toLowerCase()
+          .includes(search)
+        ||
+        product.category
+          .toLowerCase()
+          .includes(search)
+      );
+
+    });
+
+
+  productsList.innerHTML = "";
+
+
+  if(!filtered.length){
+
+    productsList.innerHTML = `
+      <div class="glass"
+           style="grid-column:1/-1;padding:40px;text-align:center;">
+        <div style="font-size:40px;">🔎</div>
+        <h3 style="margin-top:12px;">
+          No products found
+        </h3>
+        <p style="color:var(--muted);margin-top:7px;">
+          Try another search.
+        </p>
+      </div>
+    `;
+
+    return;
+
+  }
+
+
+  filtered.forEach(product => {
+
+    const category =
+      typeof getCategory === "function"
+        ? getCategory(product.category)
+        : STORE_DATA.categories.find(
+            c => c.id === product.category
+          );
+
+
+    const card =
+      document.createElement("article");
+
+    card.className =
+      "product glass";
+
+
+    card.innerHTML = `
+
+      <div class="product-icon">
+        ${product.icon || "🎮"}
+      </div>
+
+      <h3>
+        ${escapeHTML(product.name)}
+      </h3>
+
+      <div class="product-category">
+        ${category
+          ? escapeHTML(category.name)
+          : escapeHTML(product.category)}
+      </div>
+
+      <div class="product-price">
+        ${formatPrice(product.price)}
+      </div>
+
+      ${
+        product.tag
+        ? `
+          <span class="product-tag">
+            ${escapeHTML(product.tag)}
+          </span>
+        `
+        : ""
+      }
+
+      <div class="product-actions">
+
+        <button
+          class="btn btn-ghost edit-btn"
+          data-id="${product.id}"
+        >
+          ✏️ Edit
+        </button>
+
+        <button
+          class="btn btn-danger delete-btn"
+          data-id="${product.id}"
+        >
+          🗑 Delete
+        </button>
+
+      </div>
+
+    `;
+
+
+    productsList.appendChild(card);
+
+  });
+
+
+  document
+    .querySelectorAll(".edit-btn")
+    .forEach(button => {
+
+      button.addEventListener(
+        "click",
+        () => editProduct(button.dataset.id)
+      );
+
+    });
+
+
+  document
+    .querySelectorAll(".delete-btn")
+    .forEach(button => {
+
+      button.addEventListener(
+        "click",
+        () => deleteProduct(button.dataset.id)
+      );
+
+    });
+
+}
+
+
+/* =========================
+   STATS
+========================= */
+
+function updateStats(){
+
+  const products =
+    getProductsData();
+
+  const categories =
+    typeof getCategories === "function"
+      ? getCategories()
+      : STORE_DATA.categories;
+
+
+  statProducts.textContent =
+    products.length;
+
+  statCategories.textContent =
+    categories.length;
+
+
+  const average =
+    products.length
+      ? products.reduce(
+          (sum,p) =>
+            sum + Number(p.price || 0),
+          0
+        ) / products.length
+      : 0;
+
+
+  statAverage.textContent =
+    formatPrice(average);
+
+}
+
+
+/* =========================
+   FORMAT
+========================= */
+
+function formatPrice(price){
+
+  return "RM " +
+    Number(price || 0).toLocaleString(
+      "en-MY",
+      {
+        minimumFractionDigits:2,
+        maximumFractionDigits:2
+      }
+    );
+
+}
+
+
+function escapeHTML(value){
+
+  return String(value ?? "")
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+
+}
+
+
+/* =========================
+   ADD
+========================= */
+
+document
+  .getElementById("addProductBtn")
+  .addEventListener(
+    "click",
+    () => openAddModal()
+  );
+
+
+function openAddModal(){
+
+  productForm.reset();
+
+  productId.value = "";
+
+  document
+    .getElementById("modalTitle")
+    .textContent =
+      "Add Product";
+
+  renderCategorySelect();
+
+  productModal.classList.add("open");
+
+}
+
+
+/* =========================
+   EDIT
+========================= */
+
+function editProduct(id){
+
+  const products =
+    getProductsData();
+
+  const product =
+    products.find(
+      p => p.id === id
+    );
+
+  if(!product) return;
+
+
+  productId.value =
+    product.id;
+
+  productName.value =
+    product.name;
+
+  productCategory.value =
+    product.category;
+
+  productPrice.value =
+    product.price;
+
+  productIcon.value =
+    product.icon || "";
+
+  productTag.value =
+    product.tag || "";
+
+
+  document
+    .getElementById("modalTitle")
+    .textContent =
+      "Edit Product";
+
+
+  productModal.classList.add("open");
+
+}
+
+
+/* =========================
+   SAVE
+========================= */
+
+productForm.addEventListener(
+  "submit",
+  function(e){
+
+    e.preventDefault();
+
+
+    const products =
+      getProductsData();
+
+
+    const id =
+      productId.value ||
+      "admin-" +
+      Date.now();
+
+
+    const data = {
+
+      id,
+
+      name:
+        productName.value.trim(),
+
+      category:
+        productCategory.value,
+
+      price:
+        Number(productPrice.value),
+
+      icon:
+        productIcon.value.trim() ||
+        "🎮",
+
+      tag:
+        productTag.value.trim()
+
+    };
+
+
+    const existingIndex =
+      products.findIndex(
+        p => p.id === id
+      );
+
+
+    if(existingIndex >= 0){
+
+      products[existingIndex] =
+        data;
+
+      showToast(
+        "✅ Product updated"
+      );
+
+    }else{
+
+      products.push(data);
+
+      showToast(
+        "✅ Product added"
+      );
+
+    }
+
+
+    saveProductsData(products);
+
+    closeModal();
+
+    renderDashboard();
+
+  }
+);
+
+
+/* =========================
+   DELETE
+========================= */
+
+function deleteProduct(id){
+
+  const products =
+    getProductsData();
+
+  const product =
+    products.find(
+      p => p.id === id
+    );
+
+  if(!product) return;
+
+
+  const confirmDelete =
+    confirm(
+      `Delete "${product.name}"?`
+    );
+
+
+  if(!confirmDelete) return;
+
+
+  const updated =
+    products.filter(
+      p => p.id !== id
+    );
+
+
+  saveProductsData(updated);
+
+  showToast(
+    "🗑 Product deleted"
+  );
+
+  renderDashboard();
+
+}
+
+
+/* =========================
+   RESET
+========================= */
+
+document
+  .getElementById("resetBtn")
+  .addEventListener(
+    "click",
+    () => {
+
+      const yes =
+        confirm(
+          "Reset semua produk kepada produk asal?"
+        );
+
+      if(!yes) return;
+
+
+      localStorage.removeItem(
+        "izzerz_admin_products"
+      );
+
+
+      showToast(
+        "↻ Products reset"
+      );
+
+      renderDashboard();
+
+    }
+  );
+
+
+/* =========================
+   MODAL
+========================= */
+
+function closeModal(){
+
+  productModal.classList.remove(
+    "open"
+  );
+
+}
+
+
+document
+  .getElementById("closeModal")
+  .addEventListener(
+    "click",
+    closeModal
+  );
+
+
+document
+  .getElementById("cancelModal")
+  .addEventListener(
+    "click",
+    closeModal
+  );
+
+
+productModal.addEventListener(
+  "click",
+  function(e){
+
+    if(e.target === productModal){
+
+      closeModal();
+
+    }
+
+  }
+);
+
+
+/* =========================
+   SEARCH
+========================= */
+
+searchInput.addEventListener(
+  "input",
+  renderProducts
+);
+
+
+/* =========================
+   TOAST
+========================= */
+
+let toastTimer;
+
+function showToast(message){
+
+  toast.textContent =
+    message;
+
+  toast.classList.add("show");
+
+  clearTimeout(toastTimer);
+
+  toastTimer =
+    setTimeout(
+      () => {
+        toast.classList.remove("show");
+      },
+      2500
+    );
+
+}
+
+
+/* =========================
+   START
+========================= */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  () => {
+
+    if(
+      sessionStorage.getItem(
+        "izzerz_admin_logged"
+      ) === "1"
+    ){
+
+      renderDashboard();
+
+    }
+
+  }
+);
+</script>
+
+</body>
+</html>
